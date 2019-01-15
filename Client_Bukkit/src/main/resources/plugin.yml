@@ -1,0 +1,9 @@
+name: VexRobot
+author: endymx
+description: 与你的机器人互连
+main: cn.endymx.vexrobot.LoadClass
+version: 1.0.1
+
+commands:
+  sendmsg:
+    description: 测试指令
