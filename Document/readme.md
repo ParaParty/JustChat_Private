@@ -23,18 +23,18 @@
 		1. string type
 			- 本字段内容表示本段消息的消息类型
 		2. string content
-			- 存在于 ```type = "text"``` 和 ````type = "cqcode" 且 function = "CQ:image"```
+			- 存在于 ```type = "text"``` 和 ```type = "cqcode" 且 function = "CQ:image"```
 			- 本字段内容表示本段消息的显示内容
 			- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
 		3. string function
 			- 存在于 ```type = "cqcode"``` 
 			- 本字段内容表示为酷Q码的具体函数名
 		4. string target
-			- 本字段存在于 ````type = "cqcode" 且 function = "CQ:at"```
+			- 本字段存在于 ```type = "cqcode" 且 function = "CQ:at"```
 			- 本字段内容表示at的目标用户的显示昵称
 			- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
 		5. string url
-			- 本字段存在于 ````type = "cqcode" 且 function = "CQ:image"```
+			- 本字段存在于 ```type = "cqcode" 且 function = "CQ:image"```
 			- 本字段内容表示图片的url
 
 	- 普通消息样例数据包
