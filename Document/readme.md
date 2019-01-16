@@ -13,11 +13,18 @@
 		- 当前版本 : ```version = 1```
 	2. int type
 		- 表示数据包类型	
+- 心跳包消息
+	1. 当收到一个心跳包消息时，需要回应一个心跳包消息
 - 普通消息 ```type = 0```
-	1. string sender
+	1. string world
+		- 表示发送者所在的世界的名字 或 发送者所在的群的群号
+	2. string world_display
 		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
-		- 表示消息发送者
-	2. string content
+		- 表示发送者所在的世界的显示名字 或 发送者所在的群的群名
+	2. string sender
+		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
+		- 表示消息发送者用户名
+	3. string content
 		- 本段内容为一段json对象数组的Base64编码后的字符串
 		- 下面是每一个对象的字段介绍
 		1. string type
@@ -42,6 +49,8 @@
 	{
 		"version": 1,
 		"type": 0,
+		"world": "world",
+		"world_display": "5Li75LiW55WM",
 		"sender": "5rWL6K+V5raI5oGv5Y+R6YCB6ICF",
 		"content": "W3sidHlwZSI6ICJ0ZXh0IiwiY29udGVudCI6ICI1cldMNksrVjVwYUg1cHlzNWEyWDVxNjEifSx7InR5cGUiOiAiY3Fjb2RlIiwiZnVuY3Rpb24iOiAiQ1E6YXQiLCJ0YXJnZXQiOiAiNXJXTDZLK1Y1cmFJNW9HdjZLS3JZWFRvZ0lVPSJ9LHsidHlwZSI6ICJjcWNvZGUiLCJmdW5jdGlvbiI6ICJDUTppbWFnZSIsInVybCI6ICJodHRwOi8vIiwiY29udGVudCI6ICJXK1didnVlSmgxMD0ifSx7InR5cGUiOiAidGV4dCIsImNvbnRlbnQiOiAiWlcxdmFtbm10WXZvcjVYd241Q08ifV0="
 	}
