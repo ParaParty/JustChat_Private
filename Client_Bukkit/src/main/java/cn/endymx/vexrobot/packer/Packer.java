@@ -7,7 +7,7 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
 
-public class Packer {
+public abstract class Packer {
     private final static byte[] MessageHeader = {0x11,0x45,0x14};
     private String MSG;
 
@@ -24,7 +24,8 @@ public class Packer {
         bb.put(body);
         return bb.array();
     }
-
+    
+    public String getMsg();
 
     public static boolean isMessage(byte[] a){
         return (a[0] == MessageHeader[0]) && (a[1] == MessageHeader[1]) && (a[2] == MessageHeader[2]);
