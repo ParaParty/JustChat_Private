@@ -5,7 +5,7 @@
 	- 4字节 表示包体长度 0x????????
 - 报体 根据报头取得的报体长度获取
 	- json结构
-	
+
 ## 报体结构
 - 报体为json结构，解析后可得到
 	1. int version
@@ -13,9 +13,27 @@
 		- 当前版本 : ```version= 2```
 	2. int type
 		- 表示数据包类型	
-- 心跳包消息 ```type= 2```
+- 心跳包消息 ```type= 0```
 	1. 当收到一个心跳包消息时，需要回应一个心跳包消息
+	```
+	{
+		"version": 2,
+		"type": 0
+	}
+	```
 - 消息广播 ```type= 1```
+	1. string type
+	2. string content
+		- 本字段内容表示本段消息的显示内容
+		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
+	```
+	{
+		"version": 2,
+		"type": 1,
+		"event": "join",
+		"content": "W+a1i+ivleeUqOaIt13lt7LliqDlhaXmuLjmiI8="
+	}
+	```
 - 普通消息 ```type= 2```
 	1. string world
 		- 表示发送者所在的世界的名字 或 发送者所在的群的群号
@@ -25,8 +43,7 @@
 	2. string sender
 		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
 		- 表示消息发送者用户名
-	3. string content
-		- 本段内容为一段json对象数组的Base64编码后的字符串
+	3. jsonArray content
 		- 下面是每一个对象的字段介绍
 		1. string type
 			- 本字段内容表示本段消息的消息类型
@@ -48,11 +65,29 @@
 	- 普通消息样例数据包
 	```
 	{
-		"version": 1,
-		"type": 0,
+		"version": 2,
+		"type": 2,
 		"world": "world",
 		"world_display": "5Li75LiW55WM",
 		"sender": "5rWL6K+V5raI5oGv5Y+R6YCB6ICF",
-		"content": "W3sidHlwZSI6ICJ0ZXh0IiwiY29udGVudCI6ICI1cldMNksrVjVwYUg1cHlzNWEyWDVxNjEifSx7InR5cGUiOiAiY3Fjb2RlIiwiZnVuY3Rpb24iOiAiQ1E6YXQiLCJ0YXJnZXQiOiAiNXJXTDZLK1Y1cmFJNW9HdjZLS3JZWFRvZ0lVPSJ9LHsidHlwZSI6ICJjcWNvZGUiLCJmdW5jdGlvbiI6ICJDUTppbWFnZSIsInVybCI6ICJodHRwOi8vIiwiY29udGVudCI6ICJXK1didnVlSmgxMD0ifSx7InR5cGUiOiAidGV4dCIsImNvbnRlbnQiOiAiWlcxdmFtbm10WXZvcjVYd241Q08ifV0="
+		"content": [{
+			"type": "text",
+			"content": "5rWL6K+V5paH5pys5a2X5q61"
+		},
+		{
+			"type": "cqcode",
+			"function": "CQ:at",
+			"target": "5rWL6K+V5raI5oGv6KKrYXTogIU="
+		},
+		{
+			"type": "cqcode",
+			"function": "CQ:image",
+			"url": "http://",
+			"content": "W+WbvueJh10="
+		},
+		{
+			"type": "text",
+			"content": "ZW1vamnmtYvor5Xwn5CO"
+		}]
 	}
 	```
