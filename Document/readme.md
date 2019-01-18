@@ -34,7 +34,7 @@
 		"content": "W+a1i+ivleeUqOaIt13lt7LliqDlhaXmuLjmiI8="
 	}
 	```
-- 普通消息 ```type= 2```
+- 聊天消息 ```type= 2```
 	1. string world
 		- 表示发送者所在的世界的名字 或 发送者所在的群的群号
 	2. string world_display
