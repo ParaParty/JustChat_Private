@@ -22,15 +22,23 @@
 	}
 	```
 - 消息广播 ```type= 1```
-	1. string type
+	1. int event
+		- 1 玩家加入游戏 
+		- 2 玩家退出游戏
+		- 3 玩家死亡
 	2. string content
 		- 本字段内容表示本段消息的显示内容
 		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
+		- 本字段也许不存在
+	3. string sender
+		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
+		- 表示消息发送者用户名
 	```
 	{
 		"version": 2,
 		"type": 1,
-		"event": "join",
+		"event": 1,
+		"sender": "5rWL6K+V55So5oi3",
 		"content": "W+a1i+ivleeUqOaIt13lt7LliqDlhaXmuLjmiI8="
 	}
 	```
