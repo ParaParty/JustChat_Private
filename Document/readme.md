@@ -21,7 +21,16 @@
 		"type": 0
 	}
 	```
-- 消息广播 ```type= 1```
+- 注册消息 ```type= 1```
+	1. 当连接到PHP服务器时，需要向服务器注册为mc服务器的uid
+	```
+	{
+		"version": 2,
+		"type": 1
+		"uid": "mc"
+	}
+	```
+- 消息广播 ```type= 2```
 	1. int event
 		- 1 玩家加入游戏 
 		- 2 玩家退出游戏
@@ -42,7 +51,7 @@
 		"content": "W+a1i+ivleeUqOaIt13lt7LliqDlhaXmuLjmiI8="
 	}
 	```
-- 聊天消息 ```type= 2```
+- 聊天消息 ```type= 3```
 	1. string world
 		- 表示发送者所在的世界的名字 或 发送者所在的群的群号
 	2. string world_display
