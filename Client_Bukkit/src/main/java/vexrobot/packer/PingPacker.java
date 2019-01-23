@@ -5,7 +5,7 @@ import com.xuhao.didi.core.iocore.interfaces.ISendable;
 import org.json.JSONObject;
 
 public class PingPacker extends Packer implements ISendable {
-    private static int PackVersion = 1;
+    private static int PackVersion = 2;
 
     public PingPacker(){
         super(getMsg());

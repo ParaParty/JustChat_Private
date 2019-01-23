@@ -2,8 +2,10 @@ package cn.endymx.vexrobot.socket;
 
 import cn.endymx.vexrobot.LoadClass;
 
-import cn.endymx.vexrobot.packer.ChatPacker;
+import cn.endymx.vexrobot.packer.Packer;
+import cn.endymx.vexrobot.packer.UidPacker;
 import cn.endymx.vexrobot.util.MessageDecode;
+import cn.endymx.vexrobot.util.MessageTools;
 import com.xuhao.didi.core.pojo.OriginalData;
 import com.xuhao.didi.core.protocol.IReaderProtocol;
 import com.xuhao.didi.socket.client.sdk.OkSocket;
@@ -24,7 +26,7 @@ public class SocketClient extends Thread{
     public ConnectionInfo client;
     public IConnectionManager clientManager;
 
-    public SocketClient(int port, String host, LoadClass plugin) {
+    public SocketClient(String host, int port, LoadClass plugin) {
         this.port = port;
         this.host = host;
         this.plugin = plugin;
@@ -34,6 +36,7 @@ public class SocketClient extends Thread{
     public void run() {
         client = new ConnectionInfo(host, port);
         clientManager = OkSocket.open(client);
+        plugin.getLogger().info("正在连接到服务器");
         OkSocketOptions.Builder okOptionsBuilder = new OkSocketOptions.Builder();
         okOptionsBuilder.setReaderProtocol(new IReaderProtocol() {
             @Override
@@ -54,11 +57,11 @@ public class SocketClient extends Thread{
                  * 我们强烈建议您使用java.nio.ByteBuffer来做到这一点。
                  * 你需要返回有效载荷的长度,并且返回的长度中不应该包含报文头的固定长度
                  */
-                if (ChatPacker.isMessage(header)){
+                if (Packer.isMessage(header)){
                     return (header[3]&0xff)*(2<<23)+
                             (header[4]&0xff)*(2<<15)+
                             (header[5]&0xff)*(2<<7)+
-                            (header[6]&0xff) /*有效负载长度(字节数)，固定报文头长度(字节数)除外*/;
+                            (header[6]&0xff); /*有效负载长度(字节数)，固定报文头长度(字节数)除外*/
                 }
                 return 0;
             }
@@ -75,12 +78,13 @@ public class SocketClient extends Thread{
             @Override
             public void onSocketReadResponse(ConnectionInfo info, String action, OriginalData data) {
                 //遵循以上规则,这个回调才可以正常收到服务器返回的数据,数据在OriginalData中,为byte[]数组,该数组数据已经处理过字节序问题,直接放入ByteBuffer中即可使用
-                if (ChatPacker.isMessage(data.getHeadBytes())){
-                    String str = new String (data.getBodyBytes(), Charset.forName("UTF-8"));
+                if (Packer.isMessage(data.getHeadBytes())){
+                    String str = new String (data.getBodyBytes(), Charset.forName(MessageTools.getEncode()));
                     new MessageDecode(str, plugin).decodeData();
                 }
             }
         });
         clientManager.connect();
+        plugin.getLogger().info("已连接到服务器");
     }
 }

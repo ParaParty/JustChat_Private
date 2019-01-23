@@ -4,21 +4,20 @@ import cn.endymx.vexrobot.util.MessagePackType;
 import cn.endymx.vexrobot.util.MessageTools;
 import com.xuhao.didi.core.iocore.interfaces.ISendable;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.json.JSONObject;
 
 public class InfoPacker extends Packer implements ISendable {
-    public static int PackVersion = 1;
+    public static int PackVersion = 2;
 
-    public InfoPacker(AsyncPlayerChatEvent event, Player player){
-        super(getMsg(event, player));
+    public InfoPacker(String message){
+        super(getMsg(message));
     }
 
-    private static String getMsg(AsyncPlayerChatEvent event, Player player){
+    private static String getMsg(String message){
         JSONObject pingMessage = new JSONObject();
         pingMessage.put("version", PackVersion);
         pingMessage.put("type", MessagePackType.INFO);
-        pingMessage.put("sender", MessageTools.Base64Encode(player.getName()));
+        pingMessage.put("content",MessageTools.Base64Encode(message));
         return pingMessage.toString();
     }
 }
