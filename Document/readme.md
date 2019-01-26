@@ -10,27 +10,33 @@
 - 报体为json结构，解析后可得到
 	1. int version
 		- 表示数据包版本
-		- 当前版本 : ```version= 2```
+		- 当前版本 : ```version= 3```
 	2. int type
 		- 表示数据包类型	
 - 心跳包消息 ```type= 0```
 	1. 当收到一个心跳包消息时，需要回应一个心跳包消息
 	```
 	{
-		"version": 2,
+		"version": 3,
 		"type": 0
 	}
 	```
 - 注册消息 ```type= 1```
-	1. 当连接到PHP服务器时，需要向服务器注册为mc服务器的uid
+	- 当连接到JustChat服务器时，需要向JustChat服务器确认身份
+	1. int identity
+		- ```0``` 当前主机为Minecraft服务端
+		- ```1``` 当前主机为聊天机器人
+	2. string id
+		- 格式为UUID 当前主机的编号
 	```
 	{
-		"version": 2,
+		"version": 3,
 		"type": 1
-		"uid": "mc"
+		"identity": 0
+		"id": ""
 	}
 	```
-- 消息广播 ```type= 2```
+- 消息广播 ```type= 100```
 	1. int event
 		- 1 玩家加入游戏 
 		- 2 玩家退出游戏
@@ -44,14 +50,14 @@
 		- 表示消息发送者用户名
 	```
 	{
-		"version": 2,
+		"version": 3,
 		"type": 1,
 		"event": 1,
 		"sender": "5rWL6K+V55So5oi3",
 		"content": "W+a1i+ivleeUqOaIt13lt7LliqDlhaXmuLjmiI8="
 	}
 	```
-- 聊天消息 ```type= 3```
+- 聊天消息 ```type= 101```
 	1. string world
 		- 表示发送者所在的世界的名字 或 发送者所在的群的群号
 	2. string world_display
@@ -65,24 +71,29 @@
 		1. string type
 			- 本字段内容表示本段消息的消息类型
 		2. string content
-			- 存在于 ```type = "text"``` 和 ```type = "cqcode" 且 function = "CQ:image"```
+			- 本字段存在于
+				1. ```type= "text"```
+				2. ```type= "url"```
+				3. ```type= "cqcode" 且 function= "CQ:image"```
 			- 本字段内容表示本段消息的显示内容
 			- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
 		3. string function
-			- 存在于 ```type = "cqcode"``` 
+			- 存在于 ```type= "cqcode"``` 
 			- 本字段内容表示为酷Q码的具体函数名
 		4. string target
-			- 本字段存在于 ```type = "cqcode" 且 function = "CQ:at"```
+			- 本字段存在于 ```type= "cqcode" 且 function= "CQ:at"```
 			- 本字段内容表示at的目标用户的显示昵称
 			- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
 		5. string url
-			- 本字段存在于 ```type = "cqcode" 且 function = "CQ:image"```
+			- 本字段存在于
+				1. ```type= "cqcode" 且 function= "CQ:image"```
+				2. ```type= "url"
 			- 本字段内容表示图片的url
 
 	- 普通消息样例数据包
 	```
 	{
-		"version": 2,
+		"version": 3,
 		"type": 2,
 		"world": "world",
 		"world_display": "5Li75LiW55WM",
