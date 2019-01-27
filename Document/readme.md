@@ -34,9 +34,11 @@
 	```
 	{
 		"version": 3,
-		"type": 1
-		"identity": 0
-		"id": ""
+		"type": 1,
+		"identity": 0,
+		"id": "",
+		"name" : ""
+		
 	}
 	```
 - 消息广播 ```type= 100```
