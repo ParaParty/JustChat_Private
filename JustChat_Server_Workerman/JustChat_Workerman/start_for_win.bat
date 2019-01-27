@@ -1,2 +1,0 @@
-php Applications\JustChat\start_register.php Applications\JustChat\start_gateway.php Applications\JustChat\start_businessworker.php
-pause
