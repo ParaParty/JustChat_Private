@@ -41,12 +41,11 @@ class Events
 				Gateway::sendToClient($client_id, $data);
 			break;
 			case 1:
-				echo "aaaaaaaaa\n";
-				Gateway::bindUid(base64_decode($json["name"]));
+				Gateway::bindUid($client_id, base64_decode($json["name"]));
 				if($json["identity"] == 0){
-					Gateway::joinGroup("mc");
+					Gateway::joinGroup($client_id, "mc");
 				}elseif($json["identity"] == 1){
-					Gateway::joinGroup("cq");
+					Gateway::joinGroup($client_id, "cq");
 				}
 				foreach(Gateway::getAllClientIdList() as $client){
 					if($client != $client_id){
@@ -63,8 +62,8 @@ class Events
 			break;
 		}
 	}
-	
+
 	public static function onClose($client_id){
-		
+
 	}
 }
