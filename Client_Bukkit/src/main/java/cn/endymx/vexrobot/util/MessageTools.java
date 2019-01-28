@@ -10,7 +10,7 @@ public class MessageTools {
     }
 
     public static String Base64Encode(String s){
-        return Base64.getEncoder().encodeToString(s.getBytes(Charset.forName("utf-8")));
+        return Base64.getEncoder().encodeToString(s.getBytes(Charset.forName("UTF-8")));
     }
 
     public static String getEncode(){

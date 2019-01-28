@@ -3,6 +3,7 @@ package cn.endymx.vexrobot.socket;
 import cn.endymx.vexrobot.LoadClass;
 
 import cn.endymx.vexrobot.packer.Packer;
+import cn.endymx.vexrobot.packer.PingPacker;
 import cn.endymx.vexrobot.packer.UidPacker;
 import cn.endymx.vexrobot.util.MessageDecode;
 import cn.endymx.vexrobot.util.MessageTools;
@@ -16,6 +17,7 @@ import com.xuhao.didi.socket.client.sdk.client.connection.IConnectionManager;
 
 import java.nio.ByteOrder;
 import java.nio.charset.Charset;
+import java.util.UUID;
 
 public class SocketClient extends Thread{
     private final static byte[] MessageHeader = {0x11, 0x45, 0x14};
@@ -25,6 +27,7 @@ public class SocketClient extends Thread{
     private LoadClass plugin;
     public ConnectionInfo client;
     public IConnectionManager clientManager;
+    private PingPacker mPulseData = new PingPacker();
 
     public SocketClient(String host, int port, LoadClass plugin) {
         this.port = port;
@@ -38,6 +41,7 @@ public class SocketClient extends Thread{
         clientManager = OkSocket.open(client);
         plugin.getLogger().info("正在连接到服务器");
         OkSocketOptions.Builder okOptionsBuilder = new OkSocketOptions.Builder();
+        okOptionsBuilder.setPulseFrequency(20000);
         okOptionsBuilder.setReaderProtocol(new IReaderProtocol() {
             @Override
             public int getHeaderLength(){
@@ -72,7 +76,12 @@ public class SocketClient extends Thread{
         clientManager.registerReceiver(new SocketActionAdapter(){
             @Override
             public void onSocketConnectionSuccess(ConnectionInfo info, String action) {
-                plugin.getLogger().info("connected.");
+                plugin.getLogger().info("已连接到服务器");
+                clientManager.send(new UidPacker(UUID.randomUUID().toString(), "Bukkit"));
+                OkSocket.open(info)
+                        .getPulseManager()
+                        .setPulseSendable(mPulseData)//只需要设置一次,下一次可以直接调用pulse()
+                        .pulse();//开始心跳,开始心跳后,心跳管理器会自动进行心跳触发
             }
 
             @Override
@@ -85,6 +94,5 @@ public class SocketClient extends Thread{
             }
         });
         clientManager.connect();
-        plugin.getLogger().info("已连接到服务器");
     }
 }

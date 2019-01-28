@@ -1,11 +1,10 @@
 package cn.endymx.vexrobot.packer;
 
 import cn.endymx.vexrobot.util.MessagePackType;
-import com.xuhao.didi.core.iocore.interfaces.ISendable;
+import com.xuhao.didi.core.iocore.interfaces.IPulseSendable;
 import org.json.JSONObject;
 
-public class PingPacker extends Packer implements ISendable {
-    private static int PackVersion = 2;
+public class PingPacker extends Packer implements IPulseSendable {
 
     public PingPacker(){
         super(getMsg());

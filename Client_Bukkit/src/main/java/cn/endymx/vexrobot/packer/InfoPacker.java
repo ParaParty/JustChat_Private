@@ -3,11 +3,9 @@ package cn.endymx.vexrobot.packer;
 import cn.endymx.vexrobot.util.MessagePackType;
 import cn.endymx.vexrobot.util.MessageTools;
 import com.xuhao.didi.core.iocore.interfaces.ISendable;
-import org.bukkit.entity.Player;
 import org.json.JSONObject;
 
 public class InfoPacker extends Packer implements ISendable {
-    public static int PackVersion = 2;
 
     public InfoPacker(String message){
         super(getMsg(message));
