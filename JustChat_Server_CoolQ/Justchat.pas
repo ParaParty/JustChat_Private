@@ -15,6 +15,7 @@ procedure MSG_PackAndSend(
 			fromAnonymous,msg	:ansistring;
 			font					:longint);
 function MSG_Register():ansistring;
+procedure MSG_Pulse(hwnd, uMsg, eventID, dwTime:longword);stdcall;
 
 
 implementation
@@ -32,6 +33,18 @@ Begin
 	end;
 End;
 
+
+function MSG_Pulse_Packer():ansistring;
+Var
+	S:TJsonObject;
+Begin
+	S := TJsonObject.Create();
+	S.add('version',ServerPackVersion);
+	S.add('type',TMsgType_HEARTBEATS);
+	result:=S.AsJSON;
+	if S<>nil then S.Destroy;
+End;
+
 procedure onMessageReceived(aMSGPack:PMessagePack);
 Var
     S:TJsonData;
@@ -45,6 +58,10 @@ Var
 	back:ansistring;
 begin
     try
+		if length(aMSGPack^.MSG)<=2 then begin
+			CQ_i_addLog(CQLOG_ERROR,'JustChat | onMessageReceived',NetAddrToStr(aMSGPack^.Client^.FromName.sin_addr)+':'+NumToChar(aMSGPack^.Client^.FromName.sin_port)+' : Received an unrecognized message.');
+			exit();
+		end;
         S:=GetJSON(aMSGPack^.MSG);
         version:=S.FindPath('version').asInt64;
         if version=ServerPackVersion then begin
@@ -64,17 +81,17 @@ begin
             end
             else
 			if msgtype=TMsgType_Info then begin
-				eventType:=  S.FindPath('event').asInt64;
-
 				P:=S.GetEnumerator;
 				back:='';
 				while P.MoveNext do begin
 					if upcase(P.Current.Key)='CONTENT' then begin
-						back:=S.FindPath(P.Current.Key).AsString;
-					end else
+						back:=Base64_Decryption(S.FindPath(P.Current.Key).AsString);
+					end;
 				end;
 				
 				if back='' then begin
+					eventType:=S.FindPath('event').asInt64;
+
 					if eventType=TMsgType_INFO_Join then back:=MessageFormat.Msg_INFO_Join else
 					if eventType=TMsgType_INFO_Disconnect then back:=MessageFormat.Msg_INFO_Disconnect else
 					if eventType=TMsgType_INFO_PlayerDead then back:=MessageFormat.Msg_INFO_PlayerDead;
@@ -87,6 +104,25 @@ begin
 
 				//P.Destroy;
 				CQ_i_SendGroupMSG(Justchat_BindGroup,back);
+			end
+			else
+			if (msgtype=TMsgType_HEARTBEATS) then begin
+				if upcase(ServerConfig.mode)='SERVER' then begin
+					Broadcast(MSG_Pulse_Packer,aMSGPack.Client);
+					CQ_i_addLog(CQLOG_DEBUG,'JustChat | onMessageReceived',NetAddrToStr(aMSGPack^.Client^.FromName.sin_addr)+':'+NumToChar(aMSGPack^.Client^.FromName.sin_port)+' : Sent a pulse echo.');
+				end
+				else
+				begin
+					CQ_i_addLog(CQLOG_DEBUG,'JustChat | onMessageReceived',NetAddrToStr(aMSGPack^.Client^.FromName.sin_addr)+':'+NumToChar(aMSGPack^.Client^.FromName.sin_port)+' : Received a pulse echo.');
+				end;
+			end
+			else
+			if (msgtype=TMSGTYPE_REGISTRATION) then begin
+				CQ_i_addLog(CQLOG_DEBUG,'JustChat | onMessageReceived',NetAddrToStr(aMSGPack^.Client^.FromName.sin_addr)+':'+NumToChar(aMSGPack^.Client^.FromName.sin_port)+' : Received a registration message.');
+			end
+			else
+			if (msgtype=TMSGTYPE_REGISTRATION) then begin
+
 			end
 			else
             begin
@@ -437,10 +473,14 @@ Begin
 	S.add('type',TMSGTYPE_REGISTRATION);
 	S.add('identity',1);
 	S.add('id',ServerConfig.ID);
-	S.add('name',ServerConfig.ConsoleName);
+	S.add('name',Base64_Encryption(ServerConfig.ConsoleName));
 	result:=S.AsJSON;
 	if S<>nil then S.Destroy;
 End;
 
+procedure MSG_Pulse(hwnd, uMsg, eventID, dwTime:longword);stdcall;
+Begin
+	Broadcast(MSG_Pulse_Packer);
+End;
 
 end.
