@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.endymx</groupId>
-    <artifactId>VexRobot</artifactId>
-    <name>VexRobot</name>
-    <version>1.0.1</version>
+    <artifactId>MultiRobot</artifactId>
+    <name>MultiRobot</name>
+    <version>1.1.0</version>
 
 
     <properties>
@@ -22,22 +22,14 @@
             <artifactId>bukkit</artifactId>
             <version>1.7.10</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/KCauldron.jar</systemPath>
+            <systemPath>${project.basedir}/lib/Contigo-1.7.10-1614.UNOFFICIAL-server.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>io.netty</groupId>
-            <artifactId>netty-all</artifactId>
-            <version>4.1.6.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.4</version>
-        </dependency>
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20180813</version>
+        <groupId>lk.vexview</groupId>
+        <artifactId>vexview</artifactId>
+        <version>1.9.5</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/VexView1.9.5.jar</systemPath>
         </dependency>
     </dependencies>
 

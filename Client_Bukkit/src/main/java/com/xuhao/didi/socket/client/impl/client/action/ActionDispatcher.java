@@ -32,35 +32,35 @@ import static com.xuhao.didi.socket.client.sdk.client.action.IAction.ACTION_WRIT
 
 
 /**
- * ×´Ì¬»ú
+ * ×´Ì¬ï¿½ï¿½
  * Created by didi on 2018/4/19.
  */
 public class ActionDispatcher implements IRegister<ISocketActionListener, IConnectionManager>, IStateSender {
     /**
-     * Ïß³Ì»Øµ÷¹ÜÀíHandler
+     * ï¿½ß³Ì»Øµï¿½ï¿½ï¿½ï¿½ï¿½Handler
      */
     private static final DispatchThread HANDLE_THREAD = new DispatchThread();
 
     /**
-     * ÊÂ¼þÏû·Ñ¶ÓÁÐ
+     * ï¿½Â¼ï¿½ï¿½ï¿½ï¿½Ñ¶ï¿½ï¿½ï¿½
      */
     private static final LinkedBlockingQueue<ActionBean> ACTION_QUEUE = new LinkedBlockingQueue();
 
     static {
-        //Æô¶¯·Ö·¢Ïß³Ì
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ß³ï¿½
         HANDLE_THREAD.start();
     }
 
     /**
-     * ÐÐÎª»Øµ÷¼¯ºÏ
+     * ï¿½ï¿½Îªï¿½Øµï¿½ï¿½ï¿½ï¿½ï¿½
      */
     private volatile Vector<ISocketActionListener> mResponseHandlerList = new Vector<>();
     /**
-     * Á¬½ÓÐÅÏ¢
+     * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢
      */
     private volatile ConnectionInfo mConnectionInfo;
     /**
-     * Á¬½Ó¹ÜÀíÆ÷
+     * ï¿½ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     private volatile IConnectionManager mManager;
 
@@ -89,7 +89,7 @@ public class ActionDispatcher implements IRegister<ISocketActionListener, IConne
     }
 
     /**
-     * ·Ö·¢ÊÕµ½µÄÏìÓ¦
+     * ï¿½Ö·ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½ï¿½Ó¦
      *
      * @param action
      * @param arg
@@ -187,10 +187,10 @@ public class ActionDispatcher implements IRegister<ISocketActionListener, IConne
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else if (option.isCallbackInIndependentThread()) {//¶ÀÁ¢Ïß³Ì½øÐÐ»Øµ÷
+        } else if (option.isCallbackInIndependentThread()) {//ï¿½ï¿½ï¿½ï¿½ï¿½ß³Ì½ï¿½ï¿½Ð»Øµï¿½
             ActionBean bean = new ActionBean(action, serializable, this);
             ACTION_QUEUE.offer(bean);
-        } else if (!option.isCallbackInIndependentThread()) {//IOÏß³ÌÀï½øÐÐ»Øµ÷
+        } else if (!option.isCallbackInIndependentThread()) {//IOï¿½ß³ï¿½ï¿½ï¿½ï¿½ï¿½Ð»Øµï¿½
             synchronized (mResponseHandlerList) {
                 List<ISocketActionListener> copyData = new ArrayList<>(mResponseHandlerList);
                 Iterator<ISocketActionListener> it = copyData.iterator();
@@ -214,7 +214,7 @@ public class ActionDispatcher implements IRegister<ISocketActionListener, IConne
     }
 
     /**
-     * ·Ö·¢Ïß³Ì
+     * ï¿½Ö·ï¿½ï¿½ß³ï¿½
      */
     private static class DispatchThread extends AbsLoopThread {
         public DispatchThread() {
@@ -244,7 +244,7 @@ public class ActionDispatcher implements IRegister<ISocketActionListener, IConne
     }
 
     /**
-     * ÐÐÎª·â×°
+     * ï¿½ï¿½Îªï¿½ï¿½×°
      */
     protected static class ActionBean {
         public ActionBean(String action, Serializable arg, ActionDispatcher dispatcher) {
@@ -259,10 +259,10 @@ public class ActionDispatcher implements IRegister<ISocketActionListener, IConne
     }
 
     /**
-     * ÐÐÎª·Ö·¢³éÏó
+     * ï¿½ï¿½Îªï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½
      */
     public static class ActionRunnable implements Runnable {
-        private ActionDispatcher.ActionBean mActionBean;
+        private ActionBean mActionBean;
 
         ActionRunnable(ActionBean actionBean) {
             mActionBean = actionBean;
