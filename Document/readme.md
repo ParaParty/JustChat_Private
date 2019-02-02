@@ -77,52 +77,91 @@
 		- 下面是每一个对象的字段介绍
 		1. string type
 			- 本字段内容表示本段消息的消息类型
-		2. string content
-			- 本字段存在于
-				1. ```type= "text"```
-				2. ```type= "url"```
-				3. ```type= "cqcode" 且 function= "CQ:image"```
-			- 本字段内容表示本段消息的显示内容
-			- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
-		3. string function
-			- 存在于 ```type= "cqcode"``` 
-			- 本字段内容表示为酷Q码的具体函数名
-		4. string target
-			- 本字段存在于 ```type= "cqcode" 且 function= "CQ:at"```
-			- 本字段内容表示at的目标用户的显示昵称
-			- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
-		5. string url
-			- 本字段存在于
-				1. ```type= "cqcode" 且 function= "CQ:image"```
-				2. ```type= "url"
-			- 本字段内容表示图片的url
-
+		`其他的有空再更`
+		
 	- 普通消息样例数据包
-	```
-	{
-		"version": 3,
-		"type": 2,
-		"world": "world",
-		"world_display": "5Li75LiW55WM",
-		"sender": "5rWL6K+V5raI5oGv5Y+R6YCB6ICF",
-		"content": [{
-			"type": "text",
-			"content": "5rWL6K+V5paH5pys5a2X5q61"
-		},
-		{
-			"type": "cqcode",
-			"function": "CQ:at",
-			"target": "5rWL6K+V5raI5oGv6KKrYXTogIU="
-		},
-		{
-			"type": "cqcode",
-			"function": "CQ:image",
-			"url": "http://",
-			"content": "W+WbvueJh10="
-		},
-		{
-			"type": "text",
-			"content": "ZW1vamnmtYvor5Xwn5CO"
-		}]
-	}
-	```
+		1. 普通消息
+			```
+			{
+				"version": 3,
+				"type": 2,
+				"world": "576493373",
+				"world_display": "5py65Zmo5Lq65rWL6K+V576k",
+				"sender": "5rWL6K+V5raI5oGv5Y+R6YCB6ICF",
+				"content": [{
+					"type": "text",
+					"content": "5rWL6K+V5paH5pys5a2X5q61"
+				},
+				{
+					"type": "cqcode",
+					"function": "CQ:at",
+					"target": "5rWL6K+V5raI5oGv6KKrYXTogIU="
+				},
+				{
+					"type": "cqcode",
+					"function": "CQ:image",
+					"url": "http://",
+					"content": "W+WbvueJh10="
+				},
+				{
+					"type": "text",
+					"content": "ZW1vamnmtYvor5Xwn5CO"
+				},
+				{
+					"type": "cqcode",
+					"function": "CQ:face",
+					"id": 212,
+					"content": "L+aJmOiFrg==",
+					"extension": "gif"
+				}]
+			}
+			```
+		1. 红包消息
+			```
+			{
+				"version": 3,
+				"type": 101,
+				"world": "576493373",
+				"world_display": "5py65Zmo5Lq65rWL6K+V576k",
+				"sender": "5rWL6K+V5raI5oGv5Y+R6YCB6ICF",
+				"content": [{
+					"type": "cqcode",
+					"function": "CQ:hb",
+					"title": "57qi5YyF5raI5oGv5rWL6K+V"
+				}]
+			}
+			```
+		1. 富文本消息
+			```
+			{
+				"version": 3,
+				"type": 101,
+				"world": "576493373",
+				"world_display": "5py65Zmo5Lq65rWL6K+V576k",
+				"sender": "5rWL6K+V5raI5oGv5Y+R6YCB6ICF",
+				"content": [{
+					"type": "cqcode",
+					"function": "CQ:rich",
+					"url": "aHR0cDovL3VybC5jbi81RGR5dk5K",
+					"text": "W+WIhuS6q10g572R5Y+L5a625YW75LqG5LiA5Y+q54yr5ZKM5LiA5Y+q54uX77yM54uX6ICB5piv6KKr54yr5omT77yM5Y205LmQ5Zyo5YW25Lit4oCm"
+				}]
+			}
+			```
+		1. 连接分享消息
+			```
+			{
+				"version": 3,
+				"type": 101,
+				"world": "576493373",
+				"world_display": "5py65Zmo5Lq65rWL6K+V576k",
+				"sender": "5rWL6K+V5raI5oGv5Y+R6YCB6ICF",
+				"content": [{
+					"type": "cqcode",
+					"function": "CQ:share",
+					"title": "5YWo572R5pyA5YWo4oCc6ZuG56aP4oCd5pS755WlfOS9oOacieS4gOW8oOiKseiKseWNoeW+hemihu+8gQ==",
+					"url": "aHR0cDovL3VybC5jbi81cjZ2N0Ny",
+					"content": "572R5oGL5ZCXP+aIkeacieiKseiKseWNoSE=",
+					"image": "aHR0cDovL3VybC5jbi81SUJnVTF5"
+				}]
+			}
+			```
