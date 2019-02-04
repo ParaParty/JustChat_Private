@@ -165,3 +165,32 @@
 				}]
 			}
 			```
+- 玩家列表 ```type= 200```
+	1. int subtype
+		- 0 请求包
+		- 1 响应包
+	2. int count
+		- 当前在线玩家数量
+	3. int max
+		- 最大允许在线玩家数量
+	4. string[] playerlist
+		- 在线玩家的用户名按照UTF-8编码的Base64编码后的字符串数组。
+	- 请求包样例
+	```
+	{
+		"version": 3,
+		"type": 200,
+		"subtype": 0
+	}
+	```
+	- 响应包样例
+	```
+	{
+		"version": 3,
+		"type": 200,
+		"subtype": 1,
+		"count": 2,
+		"max": 20,
+		"playerlist": ["5rWL6K+V546p5a62MQ==","5rWL6K+V546p5a62Mg=="]
+	}
+	```
