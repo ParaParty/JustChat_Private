@@ -356,60 +356,6 @@ Begin
 				obj:=nil;
 			end;
 		end
-		{else
-		if (func='CQ:hb') then
-		begin
-			p:=Params_Split(s);
-			if p<>nil then begin
-				obj.add('function',func);
-				obj.add('title',Base64_Encryption(Params_Get(p,'title')));
-				Params_Free(p);
-				//P.free;
-			end
-			else
-			begin
-				obj.Destroy;
-				obj:=nil;
-			end;
-		end
-		else
-		if (func='CQ:share') then
-		begin
-			p:=Params_Split(s);
-			if p<>nil then begin
-				obj.add('function',func);
-				obj.add('title',Base64_Encryption(Params_Get(p,'title')));
-				obj.add('url',Base64_Encryption(Params_Get(p,'url')));
-				obj.add('content',Base64_Encryption(Params_Get(p,'content')));
-				obj.add('image',Base64_Encryption(Params_Get(p,'image')));
-				Params_Free(p);
-				//P.free;
-			end
-			else
-			begin
-				obj.Destroy;
-				obj:=nil;
-			end;
-		end
-		else
-		if (func='CQ:rich') then
-		begin
-			p:=Params_Split(s);
-			if p<>nil then begin
-				obj.add('function',func);
-				obj.add('url',Base64_Encryption(Params_Get(p,'url')));
-				back:=Params_Get(p,'text');
-				if back='' then back:=Params_Get(p,'brief');
-				obj.add('text',Base64_Encryption(back));
-				Params_Free(p);
-				//P.free;
-			end
-			else
-			begin
-				obj.Destroy;
-				obj:=nil;
-			end;
-		end}
 		else
 		begin
 			obj.Destroy;
