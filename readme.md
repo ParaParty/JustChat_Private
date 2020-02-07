@@ -109,12 +109,11 @@
 					"type": "cqcode",
 					"function": "CQ:face",
 					"id": 212,
-					"content": "L+aJmOiFrg==",
-					"extension": "gif"
+					"content": "L+aJmOiFrg=="
 				}]
 			}
 			```
-		1. 红包消息
+		2. 红包消息
 			```json
 			{
 				"version": 4,
