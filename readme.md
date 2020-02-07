@@ -10,14 +10,14 @@
 - 报体为json结构，解析后可得到
 	1. int version
 		- 表示数据包版本
-		- 当前版本 : ```version= 3```
+		- 当前版本 : ```version= 4```
 	2. int type
 		- 表示数据包类型	
 - 心跳包消息 ```type= 0```
 	1. 当收到一个心跳包消息时，需要回应一个心跳包消息
-	```
+	```json
 	{
-		"version": 3,
+		"version": 4,
 		"type": 0
 	}
 	```
@@ -31,9 +31,9 @@
 	3. string name
 		- 当前服务器名字
 		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
-	```
+	```json
 	{
-		"version": 3,
+		"version": 4,
 		"type": 1,
 		"identity": 0,
 		"id": "",
@@ -55,9 +55,9 @@
 		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
 		- 表示消息发送者用户名
 		- 可和event字段同时不存在
-	```
+	```json
 	{
-		"version": 3,
+		"version": 4,
 		"type": 1,
 		"event": 1,
 		"sender": "5rWL6K+V55So5oi3",
@@ -76,14 +76,12 @@
 	3. jsonArray content
 		- 下面是每一个对象的字段介绍
 		1. string type
-			- 本字段内容表示本段消息的消息类型
-		`其他的有空再更`
-		
+			- 本字段内容表示本段消息的消息类型		
 	- 普通消息样例数据包
 		1. 普通消息
-			```
+			```json
 			{
-				"version": 3,
+				"version": 4,
 				"type": 2,
 				"world": "576493373",
 				"world_display": "5py65Zmo5Lq65rWL6K+V576k",
@@ -117,9 +115,9 @@
 			}
 			```
 		1. 红包消息
-			```
+			```json
 			{
-				"version": 3,
+				"version": 4,
 				"type": 101,
 				"world": "576493373",
 				"world_display": "5py65Zmo5Lq65rWL6K+V576k",
@@ -132,9 +130,9 @@
 			}
 			```
 		1. 富文本消息
-			```
+			```json
 			{
-				"version": 3,
+				"version": 4,
 				"type": 101,
 				"world": "576493373",
 				"world_display": "5py65Zmo5Lq65rWL6K+V576k",
@@ -148,9 +146,9 @@
 			}
 			```
 		1. 连接分享消息
-			```
+			```json
 			{
-				"version": 3,
+				"version": 4,
 				"type": 101,
 				"world": "576493373",
 				"world_display": "5py65Zmo5Lq65rWL6K+V576k",
@@ -175,22 +173,39 @@
 		- 最大允许在线玩家数量
 	4. string[] playerlist
 		- 在线玩家的用户名按照UTF-8编码的Base64编码后的字符串数组。
+    5. string world
+		- 发送者所在的群的群号
+		- 响应包原封不动发回
+	6. string world_display
+		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
+		- 发送者所在的群的群名
+		- 响应包原封不动发回
+	7. string sender
+		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
+		- 表示消息发送者用户名
+		- 响应包原封不动发回
 	- 请求包样例
-	```
+	```json
 	{
-		"version": 3,
+		"version": 4,
 		"type": 200,
-		"subtype": 0
+		"subtype": 0,
+		"world": "576493373",
+		"world_display": "5py65Zmo5Lq65rWL6K+V576k",
+		"sender": "5rWL6K+V5raI5oGv5Y+R6YCB6ICF"
 	}
 	```
 	- 响应包样例
-	```
+	```json
 	{
-		"version": 3,
+		"version": 4,
 		"type": 200,
 		"subtype": 1,
 		"count": 2,
 		"max": 20,
-		"playerlist": ["5rWL6K+V546p5a62MQ==","5rWL6K+V546p5a62Mg=="]
+		"playerlist": ["5rWL6K+V546p5a62MQ==","5rWL6K+V546p5a62Mg=="],
+		"world": "576493373",
+		"world_display": "5py65Zmo5Lq65rWL6K+V576k",
+		"sender": "5rWL6K+V5raI5oGv5Y+R6YCB6ICF"
 	}
 	```
