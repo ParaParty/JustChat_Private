@@ -55,6 +55,11 @@
 		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
 		- 表示消息发送者用户名
 		- 可和event字段同时不存在
+	4. string from_server
+        - 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
+		- 表示本条消息发送哪一个服务器
+		- 本字段仅在 Minecraft 接受数据的时候存在，在 Minecraft 发送数据时不用填写
+		- 本字段由中心服务器（在 2.X 中是 CoolQ 端）统一填写
 	```json
 	{
 		"version": 4,
@@ -70,13 +75,18 @@
 	2. string world_display
 		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
 		- 表示发送者所在的世界的显示名字 或 发送者所在的群的群名
-	2. string sender
+	3. string sender
 		- 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
 		- 表示消息发送者用户名
-	3. jsonArray content
+	4. jsonArray content
 		- 下面是每一个对象的字段介绍
 		1. string type
 			- 本字段内容表示本段消息的消息类型		
+	5. string from_server
+        - 本字段内容为将原字符串内容按UTF-8编码后再进行Base64编码的字符串
+		- 表示本条消息发送哪一个服务器
+		- 本字段仅在 Minecraft 接受数据的时候存在，在 Minecraft 发送数据时不用填写
+		- 本字段由中心服务器（在 2.X 中是 CoolQ 端）统一填写
 	- 普通消息样例数据包
 		1. 普通消息
 			```json
